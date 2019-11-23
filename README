@@ -1,0 +1,93 @@
+Mateescu Cristina-Ramona , 311CB 
+Tema2
+
+	header.h
+	
+	- fisierul contine structurile definite
+		Celula - celula pentru lista simplu inlantuita generica
+		TCoada - coada cu elemente de tip TLista
+		TStica - stiva cu elemente de tip TLista 
+		TSistem - un sistem Hanoi ce are urmatoarele componente:
+				Cele 3 stive: A,B,C
+				Coada de mutari 
+				Culoarea sistemului
+				Numarul de discuri din sistem
+		TMuta - structura folosita pentru stocarea unei mutari 
+		      - contine stiva sursa si stiva destinatie pentru discul curent de mutat
+
+	main.c
+	
+	Functii auxiliare :
+		
+	void distruge_sisteme(TLista * sisteme)
+		- functia distruge toate sistemele Hanoi alocate
+		- in p se retine sistemul curent de distrus
+		- se elibereaza pe rand cele 3 stive A,B,C 
+		- se elibereaza coada de mutari
+		- se elibereaza memoria alocata pentru culoarea sistemului
+		- se elibereaza sistemul curent
+
+	TLista InsCel ( void* info )
+		-functia aloca o celula de tip TLista, cu info-ul info 
+
+	TSH AlocSH ( size_t size,char* culoare )
+		-functia aloca un sistem de o anumita culoare
+		- se aloca memorie pentru cele 3 stive, coada de mutari, culoare 
+		- la fiecare pas, daca nu se poate aloca un element
+		  se elibereaza tot ce a fost alocat anterior
+		-se returneaza sistemul alocat
+	
+	void Hanoi ( int n, char sursa, char destinatie, char aux, AQ mutari)
+		-functia realizeaza recursiv n mutari
+		- care sunt introduse in coada de mutari
+		- functia se bazeaza pe observatia :
+			pentru a se muta n discuri de pe A pe C
+			se muta n-1 discuri pe B
+			se muta al n-lea disc pe C
+			se muta n-1 discuri pe C
+	
+	Functiile de baza : 
+		
+	void add ( TLista *sisteme, char *culoare, int dim ) 
+		- folosind pointerul p, se parcurg sistemele, cautandu-se sistemul de culoare 
+		- daca sistemul cautat nu exista, se foloseste functia auxiliara care aloca un sistem nou
+		- se aloca noua celula din lista de sisteme, ce are ca informatie noul sistem
+		- discul de diametru dim este inserat apoi in stiva A astfel :
+			se aloca memorie pentru o noua celula a discului
+			se cauta locul in care trebuie inserat discul
+			se fac extrageri repetate, discurile mutandu-se in stiva auxiliara saux
+			se insereaza discul in locul corespunzator
+			se muta celelalte discuri din saux inapoi in stiva, care ramane astfel ordonata
+		- se actualizeaza numarul de discuri din sistem
+	
+	void show (TLista sisteme, char* culoare,FILE * out)
+		- folosind pointerul p, se parcurg sistemele, cautandu-se sistemul de culoare 
+		- daca sistemul nu este gasit, inseamna ca acesta este gol si se afiseaza cele 3 stive fara niciun disc
+		- urmatorul procedeu de afisare se repeta pentru toate cele 3 stive A, B, C
+		- pentru afisarea in ordinea ceruta, toate discurile se muta initial in stiva auxiliara saux
+		- pe masura ce acestea sunt mutate inapoi in stiva, sunt si afisate in formatul corespunzator
+		
+	
+	void show_moves (TLista sisteme, char* culoare,FILE * out,int nr)
+		- folosind pointerul p, se parcurg sistemele, cautandu-se sistemul de culoare 
+		- Daca sistemul se afla in starea initiala, se apeleaza functia Hanoi pentru crearea cozii de mutari
+		- din coada de mutari se extrag maxim numarul de mutari cerute, care sunt inserate in coada auxiliara caux
+		- Pentru a pastra ordinea mutarilor corecta, sunt extrase si restul mutarilor din coada si inserate in caux
+		- Toate mutarile se insereaza apoi la loc in coada de mutari ( functia nu modifica sistemul)
+
+	void play (TLista sisteme, char* culoare,FILE * out,int nr)
+		- folosind pointerul p, se parcurg sistemele, cautandu-se sistemul de culoare 
+		- Daca sistemul se afla in starea initiala, se apeleaza functia Hanoi pentru crearea cozii de mutari
+		- Din coada de mutari sunt extrase maxim nr mutari
+		- Pe masura ce o mutare este extrasa, sistemul se modifica astfel :
+			discul din stiva sursa este extras si inserat in stiva destinatie
+			sursa si destinatie sunt cele 2 campuri ale unei mutari
+	
+	In main :
+		-se citeste din fisierul de intrare, se apeleaza functiile corespunzatoare
+		- se distrug toate sistemele
+ 
+		
+		
+	
+		
